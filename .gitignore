@@ -24,3 +24,6 @@ db.sqlite3
 
 # Windows
 Thumbs.db
+
+# Virtual Environment
+env/
