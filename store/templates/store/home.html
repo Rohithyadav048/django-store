@@ -1,0 +1,94 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Home - QuickCart{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section text-center bg-light py-5">
+  <div class="container">
+    <h1 class="display-5 fw-bold">Welcome to QuickCart</h1>
+    <p class="lead">Shop your favorite products at the best prices!</p>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section class="products-section py-5">
+  <div class="container">
+    {% if products %}
+      <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-4">
+          <div class="card product-card h-100 shadow-sm rounded">
+            <div class="product-image text-center p-3">
+              <a href="{% url 'product_detail' product.slug %}">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+                {% else %}
+                  <img src="{% static 'store/images/default_product.png' %}" alt="No image" class="img-fluid">
+                {% endif %}
+              </a>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
+                  {{ product.name }}
+                </a>
+              </h5>
+              <p class="card-text small text-muted">{{ product.description|truncatewords:20 }}</p>
+              <p class="fw-bold text-success">₹{{ product.price }}</p>
+              <form method="POST" action="{% url 'add_to_cart' product.id %}" class="mt-auto">
+                {% csrf_token %}
+                <div class="input-group mb-2">
+                  <input type="number" name="quantity" value="1" min="1" class="form-control" required>
+                </div>
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-cart-plus"></i> Add to Cart
+                  </button>
+                  <a href="{% url 'buy_now' product.id %}" class="btn btn-success">
+                    ⚡ Buy Now
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <h4>No products found.</h4>
+        <p>Try adjusting your search or check back later.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Contact Us</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form>
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Your Name" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Your Email" required>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

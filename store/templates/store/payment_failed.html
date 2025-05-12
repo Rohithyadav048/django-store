@@ -1,0 +1,20 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Payment Failed - QuickCart{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <div class="payment-failed-icon mb-3">
+        <i class="bi bi-x-circle-fill text-danger" style="font-size: 4rem;"></i>
+    </div>
+
+    <h2 class="text-danger mb-3">Payment Failed</h2>
+    <p class="lead">Oops! Something went wrong during the payment process.</p>
+    <p class="text-muted">Please try again or <a href="mailto:support@myshop.com" class="text-primary">contact our support</a> if the issue persists.</p>
+
+    <a href="{% url 'cart' %}" class="btn btn-outline-danger btn-lg mt-4">
+        <i class="bi bi-arrow-left-circle me-1"></i> Return to Cart
+    </a>
+</div>
+{% endblock %}

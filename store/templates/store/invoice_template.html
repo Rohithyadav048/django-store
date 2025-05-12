@@ -1,0 +1,68 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load multiply_filters %}
+
+{% block title %}Invoice #{{ order.id }} - QuickCart{% endblock %}
+
+{% block content %}
+<div class="invoice-container my-5 p-4 bg-white shadow rounded">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 invoice-header">
+        <div class="logo">
+            <img src="{% static 'store/images/logo.png' %}" alt="QuickCart Logo" height="50">
+        </div>
+        <div class="text-end business-info">
+            <h3 class="mb-1">QuickCart</h3>
+            <small>
+                123 Market Street<br>
+                City, Country 123456<br>
+                support@quickcart.com<br>
+                +91-9876543210
+            </small>
+        </div>
+    </div>
+
+    <!-- Invoice Metadata -->
+    <div class="invoice-meta mb-4">
+        <h4 class="fw-bold">Invoice #{{ order.id }}</h4>
+        <p><strong>Name:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Date:</strong> {{ order.created_at|date:"F d, Y - H:i" }}</p>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered invoice-table">
+            <thead class="table-light">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price (₹)</th>
+                    <th>Total (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.quantity|multiply:item.product.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Grand Total -->
+    <div class="text-end mt-3">
+        <h5 class="fw-bold">Grand Total: ₹{{ order.total_price }}</h5>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-5 invoice-footer">
+        <p class="text-muted">Thank you for shopping with QuickCart!</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,452 @@
+
+body {
+  padding-top: 80px;
+}
+
+
+/* base */
+/* Toast Notifications */
+.toast-container {
+  z-index: 9999;
+}
+
+/* Optional: modal tweaks */
+.modal-content form .form-label {
+  font-weight: 500;
+}
+
+.modal-content form .form-control {
+  border-radius: 0.25rem;
+}
+
+/* Consistent spacing for main content */
+main.container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+/* 404 Page Styles */
+.not-found-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 2rem;
+}
+
+.not-found-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.not-found-heading {
+  font-size: 4rem;
+  color: #dc3545;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.not-found-message {
+  font-size: 1.25rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.3rem;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  text-decoration: none;
+}
+
+/* buy_now.html styles */
+.buy-now-container {
+  margin-top: 3rem;
+}
+
+.buy-now-container h2 {
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.product-image {
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-title {
+  margin-top: 1rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.product-description {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.product-price {
+  margin: 1.5rem 0;
+  font-weight: 500;
+  color: #212529;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.buy-now-container .form-control {
+  max-width: 200px;
+}
+
+.buy-now-container .btn-primary {
+  margin-top: 1rem;
+}
+
+/* cart styles */
+.cart-container h2 {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.cart-table th, .cart-table td {
+  vertical-align: middle;
+  padding: 1rem;
+}
+
+.cart-qty-input {
+  width: 60px;
+  text-align: center;
+}
+
+.cart-summary h4 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.cart-summary a.btn-success {
+  padding: 0.5rem 1.5rem;
+}
+
+/* checkout.html styles */
+.checkout-container h2 {
+  font-weight: 600;
+}
+
+.checkout-container .card h4 {
+  font-weight: 500;
+}
+
+.checkout-container .form-label {
+  font-weight: 500;
+}
+
+.checkout-container .list-group-item h6 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.checkout-container .btn-primary {
+  padding: 0.6rem;
+  font-size: 1rem;
+}
+
+/* Edit Profile Styles */
+.edit-profile-container h4 {
+  font-weight: 600;
+}
+
+.edit-profile-container .form-label {
+  font-weight: 500;
+}
+
+.profile-img-preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 2px solid #dee2e6;
+}
+
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  border-bottom: 1px solid #dee2e6;
+}
+
+.hero-section h1 {
+  color: #343a40;
+}
+
+.hero-section p {
+  color: #6c757d;
+}
+
+/* Product Cards */
+.product-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image img {
+  max-height: 200px;
+  object-fit: contain;
+}
+
+/* Contact Section */
+.contact-section form input,
+.contact-section form textarea {
+  border-radius: 8px;
+}
+
+.contact-section button {
+  font-weight: 600;
+}
+
+/* invoice style */
+.invoice-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin: auto;
+  font-size: 14px;
+}
+
+.invoice-header .logo img {
+  max-height: 50px;
+}
+
+.invoice-meta h4 {
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.invoice-table th,
+.invoice-table td {
+  vertical-align: middle !important;
+}
+
+.invoice-footer {
+  border-top: 1px dashed #ccc;
+  padding-top: 15px;
+  margin-top: 30px;
+  font-style: italic;
+  color: #555;
+}
+
+/* login page style */
+.login-section {
+  background: #f8f9fa;
+}
+
+.login-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.login-card h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-card .form-control {
+  border-radius: 8px;
+}
+
+.login-card .btn-primary {
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* my order page */
+
+.my-orders .order-card {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.my-orders .order-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.my-orders .badge {
+  font-size: 0.9rem;
+  padding: 0.4em 0.75em;
+}
+
+.my-orders h5 {
+  font-weight: 600;
+}
+
+.my-orders small {
+  font-size: 0.85rem;
+}
+
+/* cart */
+/* Adjusts the badge position and sizing */
+.cart-badge {
+  font-size: 0.75rem;
+  padding: 0.3em 0.6em;
+}
+
+/* Style logout link like a buttonless nav item */
+.logout-btn {
+  color: #0d6efd;
+  text-decoration: none;
+}
+.logout-btn:hover {
+  text-decoration: underline;
+}
+
+/* order detail */
+.order-detail-page h2 {
+  font-weight: 600;
+  color: #333;
+}
+
+.order-detail-page .card {
+  background-color: #fdfdfd;
+  border-radius: 10px;
+}
+
+.order-detail-page .img-thumbnail {
+  border: none;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+}
+
+.order-detail-page .list-group-item {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* otp verify  */
+.otp-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.otp-form input[type="text"] {
+  font-size: 1.1rem;
+  padding: 10px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.otp-form button {
+  padding: 10px 0;
+  font-size: 1.1rem;
+}
+
+/* payment failed */
+.payment-failed-icon {
+  animation: pulse-fail 1s ease-in-out infinite;
+}
+
+@keyframes pulse-fail {
+  0%, 100% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+}
+
+/* payment sucess */
+
+.order-summary .card {
+  border-radius: 8px;
+}
+
+.order-summary .list-group-item {
+  font-size: 0.95rem;
+  background-color: #fdfdfd;
+}
+
+.bi-check-circle-fill {
+  animation: pulse-success 1s ease-in-out infinite;
+}
+
+@keyframes pulse-success {
+  0%, 100% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+}
+
+/* profile page */
+
+.profile-banner {
+  height: 100px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.profile-img-wrapper {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

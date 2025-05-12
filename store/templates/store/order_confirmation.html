@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; background-color: #ffffff;">
+        <h2 style="color: #28a745;">Thank you{{ user.first_name|default:", Valued Customer" }}!</h2>
+        <p>Your order <strong>#{{ order.id }}</strong> has been successfully placed.</p>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background-color: #f8f9fa;">
+                    <th style="padding: 8px; border: 1px solid #ccc; text-align: left;">Product</th>
+                    <th style="padding: 8px; border: 1px solid #ccc; text-align: center;">Qty</th>
+                    <th style="padding: 8px; border: 1px solid #ccc; text-align: right;">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ccc;">{{ item.product.name }}</td>
+                    <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">{{ item.quantity }}</td>
+                    <td style="padding: 8px; border: 1px solid #ccc; text-align: right;">₹{{ item.product.price|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #ccc; text-align: right; font-weight: bold;">Total</td>
+                    <td style="padding: 8px; border: 1px solid #ccc; text-align: right; font-weight: bold;">₹{{ order.total_price|floatformat:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 20px;">We'll notify you when it's on the way.</p>
+
+        <div style="margin-top: 40px; text-align: center; color: #888; font-size: 12px;">
+            &copy; {{ now|date:"Y" }} QuickCart. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

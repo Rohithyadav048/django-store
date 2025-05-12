@@ -1,0 +1,36 @@
+{% extends 'store/base.html' %}
+{% load custom_filters %}
+
+{% block title %}Buy Now - QuickCart{% endblock %}
+
+{% block content %}
+<div class="container mt-5 buy-now-container">
+    <h2 class="mb-4">Buy Now</h2>
+
+    {% if product %}
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ product.display_image }}" alt="{{ product.name }}" class="img-fluid product-image">
+            </div>
+            <div class="col-md-6">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <p class="product-description">{{ product.description }}</p>
+                <h4 class="product-price">Price: ₹{{ product.price }}</h4>
+
+                <form method="POST" action="{% url 'buy_now' product.id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control w-50">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Buy Now</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Product not found.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

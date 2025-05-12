@@ -1,0 +1,38 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+  <h2 class="mb-3">Upload Products CSV</h2>
+
+  <!-- Flash Messages -->
+  {% if success %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      ✅ File uploaded successfully!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% elif error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      ❌ Error uploading file. Please try again.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+
+  <p class="text-muted">Ensure the CSV contains these columns: <strong>Product Name, Price, Description, Quantity</strong>.</p>
+
+  <form method="POST" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="csv_file" class="form-label">CSV File</label>
+      <input type="file" name="csv_file" id="csv_file" class="form-control {% if error %}is-invalid{% endif %}" accept=".csv" required>
+      {% if error %}
+        <div class="invalid-feedback d-block">Please upload a valid CSV file.</div>
+      {% endif %}
+      <div class="form-text">Only .csv files. Max size: 5MB.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "store/base.html" %}
+{% load custom_filters %}
+
+{% block title %}Your Cart - QuickCart{% endblock %}
+
+{% block content %}
+<div class="container mt-5 cart-container">
+    <h2 class="mb-4">Your Shopping Cart</h2>
+
+    {% if cart_empty %}
+        <div class="alert alert-info text-center">
+            Your cart is empty. <a href="{% url 'home' %}" class="alert-link">Browse Products</a>
+        </div>
+    {% else %}
+        <div class="table-responsive mb-4">
+            <table class="table table-bordered align-middle text-center cart-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product</th>
+                        <th style="width: 160px;">Quantity</th>
+                        <th>Price (₹)</th>
+                        <th>Total (₹)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td class="text-start">{{ item.product.name }}</td>
+                        <td>
+                            <form method="post" action="{% url 'update_cart' %}" class="d-flex justify-content-center align-items-center gap-2">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control form-control-sm cart-qty-input">
+                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </td>
+                        <td>₹{{ item.product.price }}</td>
+                        <td>₹{{ item.product.price|multiply:item.quantity }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center cart-summary">
+            <h4>Total: ₹{{ total }}</h4>
+            <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

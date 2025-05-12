@@ -1,0 +1,49 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}My Wishlist{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'store/css/wishlist.css' %}">
+
+<div class="container wishlist-container py-5">
+  <h2 class="mb-4 fw-bold">My Wishlist</h2>
+
+  {% if items %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for item in items %}
+        <div class="col">
+          <div class="card wishlist-card h-100 shadow-sm">
+            {% if item.product.image %}
+              <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.name }}" onerror="this.onerror=null;this.src='{% static 'store/images/default_product.png' %}'">
+            {% else %}
+              <img src="{% static 'store/images/default_product.png' %}" class="card-img-top" alt="Default Image">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ item.product.name }}</h5>
+              <p class="card-text text-muted">₹{{ item.product.price }}</p>
+
+              <div class="d-grid gap-2">
+                <a href="{% url 'product_detail' item.product.slug %}" class="btn btn-primary btn-sm">View</a>
+                <a href="{% url 'remove_from_wishlist' item.id %}" class="btn btn-danger btn-sm">Remove</a>
+                <form method="post" action="{% url 'add_to_cart' item.product.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success btn-sm">Move to Cart</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <hr>
+    <form method="post" action="{% url 'clear_wishlist' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to clear your wishlist?')">Clear Wishlist</button>
+    </form>
+  {% else %}
+    <p class="text-muted">Your wishlist is empty. Start adding products!</p>
+    <a href="{% url 'home' %}" class="btn btn-outline-primary mt-3">Browse Products</a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Checkout - QuickCart{% endblock %}
+
+{% block content %}
+<div class="container my-5 checkout-container">
+  <h2 class="mb-4 text-center">Checkout</h2>
+
+  <form method="post" class="row gy-4">
+    {% csrf_token %}
+
+    <!-- Shipping Address -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm p-4 h-100">
+        <h4 class="mb-4">Shipping Address</h4>
+        {% for field in form %}
+          <div class="mb-3">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <div class="text-danger small">{{ field.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm p-4 h-100">
+        <h4 class="mb-4">Order Summary</h4>
+        <div class="list-group mb-3">
+          {% for item in items %}
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="mb-1">{{ item.product.name }}</h6>
+                <small>Quantity: {{ item.quantity }}</small>
+              </div>
+              <span>₹{{ item.total_price }}</span>
+            </div>
+          {% empty %}
+            <p class="text-muted">Your cart is empty.</p>
+          {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-between border-top pt-3 fw-semibold">
+          <span>Total:</span>
+          <span>₹{{ total }}</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4 w-100">Continue to Payment</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

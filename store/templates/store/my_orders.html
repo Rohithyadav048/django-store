@@ -1,0 +1,60 @@
+{% extends 'store/base.html' %}
+
+{% block title %}My Orders - QuickCart{% endblock %}
+
+{% block content %}
+<div class="container mt-5 my-orders">
+  <h2 class="mb-4 text-center">My Orders</h2>
+
+  {% if orders %}
+    <div class="list-group">
+      {% for order in orders %}
+        <div class="list-group-item order-card mb-4 p-4 shadow-sm rounded-4 border-0 bg-white">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="mb-0">Order #{{ order.id }}</h5>
+            <span class="badge rounded-pill
+              {% if order.status == 'pending' %}
+                bg-warning text-dark
+              {% elif order.status == 'processing' %}
+                bg-info text-dark
+              {% elif order.status == 'paid' %}
+                bg-primary
+              {% elif order.status == 'shipped' %}
+                bg-secondary
+              {% elif order.status == 'delivered' %}
+                bg-success
+              {% elif order.status == 'cancelled' %}
+                bg-danger
+              {% else %}
+                bg-dark
+              {% endif %}
+            ">
+              {{ order.status|capfirst }}
+            </span>
+          </div>
+
+          <small class="text-muted">Placed on {{ order.created_at|date:"F d, Y - H:i" }}</small>
+
+          <hr>
+
+          <p class="fw-semibold mb-1">Items Ordered:</p>
+          <ul class="list-unstyled ms-3 mb-3">
+            {% for item in order.items.all %}
+              <li>• {{ item.product.name }} <span class="text-muted">(x{{ item.quantity }})</span></li>
+            {% endfor %}
+          </ul>
+
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+            <span class="fw-bold">Total: ₹{{ order.total_price|floatformat:2 }}</span>
+            <a href="{% url 'order_detail' order.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      No orders found. <a href="{% url 'home' %}" class="alert-link">Start Shopping</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

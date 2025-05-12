@@ -1,0 +1,116 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Complete Payment{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-3">Complete Your Payment</h2>
+    <p class="mb-4">Total amount to be paid: <strong>₹{{ amount_rupees|floatformat:"2" }}</strong></p>
+
+    <!-- Razorpay Checkout Button -->
+    <button 
+        id="rzp-button"
+        class="btn btn-primary btn-lg"
+        data-key="{{ razorpay_key }}"
+        data-order-id="{{ razorpay_order_id }}"
+        data-name="{{ user.get_full_name }}"
+        data-email="{{ user.email }}"
+    >
+        <i class="bi bi-wallet2 me-1"></i> Pay Now
+    </button>
+
+    <!-- Toast container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;"></div>
+</div>
+
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    function getCSRFToken() {
+        const name = 'csrftoken';
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                return decodeURIComponent(cookie.split('=')[1]);
+            }
+        }
+        return '';
+    }
+
+    const options = {
+        key: "{{ razorpay_key }}",
+        currency: "INR",
+        name: "QuickCart",
+        description: "Order Payment",
+        order_id: "{{ razorpay_order_id }}",  // Razorpay needs this to link to backend order
+
+        handler: function (response) {
+            console.log("Razorpay response:", response);
+
+            // Manually add order ID
+            response.razorpay_order_id = "{{ razorpay_order_id }}";
+
+            fetch("{% url 'payment_handler' %}", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                },
+                body: JSON.stringify(response)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    window.location.href = "{% url 'payment_success' %}";
+                } else {
+                    showToast("Payment failed: " + data.message, "error");
+                }
+            })
+            .catch(() => {
+                showToast("Network error. Try again.", "error");
+            });
+        },
+
+        prefill: {
+            name: "{{ user.get_full_name }}",
+            email: "{{ user.email }}"
+        },
+
+        theme: { color: "#0d6efd" },
+        modal: {
+            ondismiss: function () {
+                showToast("Payment was cancelled.", "error");
+                document.getElementById('rzp-button').innerText = "Pay Now";
+                document.getElementById('rzp-button').disabled = false;
+            }
+        }
+    };
+
+    const rzp = new Razorpay(options);
+
+    document.getElementById('rzp-button').onclick = function (e) {
+        e.preventDefault();
+        this.innerText = "Processing...";
+        this.disabled = true;
+        rzp.open();
+    };
+
+    function showToast(message, type) {
+        const toastColor = type === "error" ? "bg-danger" : "bg-success";
+        const toastHTML = `
+            <div class="toast align-items-center ${toastColor} text-white" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                </div>
+            </div>
+        `;
+        const toastContainer = document.querySelector('.toast-container');
+        toastContainer.innerHTML = toastHTML;
+        new bootstrap.Toast(toastContainer.lastElementChild).show();
+    }
+</script>
+
+{% endblock %}
