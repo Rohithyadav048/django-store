@@ -7,23 +7,62 @@ dist/
 build/
 *.log
 
+# Byte-compiled / optimized / DLL files
+*.pyd
+*.so
+*.dll
+
+# Virtual Environment
+env/
+venv/
+ENV/
+.venv/
+
 # Environments
 .env
 *.env
 
 # Django
 db.sqlite3
-/staticfiles/
 /media/
+staticfiles/  # This is collected static (not your dev static dir)
+/staticfiles/
+/*.sqlite3
 
-# VSCode
+# Django Migrations (optional – keep if you're working in teams)
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Testing
+pytest_cache/
+.tox/
+.nox/
+
+# VS Code
 .vscode/
 
-# macOS
+# IDEs
+.idea/
+
+# OS junk
 .DS_Store
-
-# Windows
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Virtual Environment
-env/
+# Backup / swap / temp
+*~
+*.bak
+*.swp
+*.tmp
+
+# Logs
+*.log
+
+# Local dev files
+local_settings.py
